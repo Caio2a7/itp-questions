@@ -5,24 +5,27 @@ seus números no gradiente para somar o valor de uma aposta.
 */
 #include <stdio.h>
 //Faremos todos os cáculos e operações em uma função
+// Entrada do usuário: largura valor_inicial cor
+// O valor inicial serve para definir os números do gradiente
 void calcular_aposta(int largura, int altura, int valor_inicial, char cor, int bandeira[altura][largura]) {
     char cores[] = {'G', 'Y', 'R'};  // nome arbitrário das cores tricolor
-    int cor_gradiente = 0;  
-    int gradiente = valor_inicial + 1;
-    int soma_aposta = 0;
+    int cor_gradiente = 0;           // será utilizado para definir qual o número inteiro do gradiente corresponde a cor
+    int gradiente = valor_inicial + 1;     // trabalharemos com os números inteiros do gradiente aqui
+    int soma_aposta = 0;    
     int valor_aposta = 0;
     int dif_aposta = 0;
+    // Verificamos a cor escolhida no array de cores e definimos a cor_gradiente com base no valor_inicial
     for (int i = 0; i < 3; i++) {
         if (cores[i] == cor) {
             cor_gradiente += valor_inicial + i + 1;
         }
     }
-    
+    //Aqui criamos o gradiente iterando os dados para a bandeira, além de aplicarmos condicinais para a aposta
     for (int i = 0; i < largura; i++) {
-        if (gradiente == cor_gradiente) {
+        if (gradiente == cor_gradiente) {  //verificando se o valor do gradiente corresponde ao da cor
             for (int j = 0; j < altura; j++) {
                 bandeira[j][i] = gradiente;
-                valor_aposta += gradiente;
+                valor_aposta += gradiente;  // Aqui fazemos a soma para a aposta
             }
         }
         else {
@@ -31,11 +34,12 @@ void calcular_aposta(int largura, int altura, int valor_inicial, char cor, int b
                 soma_aposta += gradiente;
             }
         }
-        if (i % (largura / 3) == (largura / 3) - 1) {
+        //fazemos uma verificação para aumentar o valor do gradiente
+        if (i % (largura / 3) == (largura / 3) - 1) {   //lembre-se que cada cor da bandeira deve ter um número
             gradiente++;
         }
     }
-    
+    //printamos
     for (int i = 0; i < altura; i++) {
         for (int j = 0; j < largura; j++) {
             printf("%d ", bandeira[i][j]);
