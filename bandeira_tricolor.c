@@ -1,9 +1,13 @@
-//Gradiente de Cores usando Números, ademais realizamos uma aposta com base na soma dos números do gradiente de cor
+/*Neste código utilizaremos de matrizes para definir um gradiente de cores com números inteiros
+simbolizando a cor do gradiente, nesse caso o gradiente é de uma bandeira tricolor;
+Ademais, o usuário selecionará uma das cores e a cor selecionada será usada para somar todos
+seus números no gradiente para somar o valor de uma aposta.
+*/
 #include <stdio.h>
-
+//Faremos todos os cáculos e operações em uma função
 void calcular_aposta(int largura, int altura, int valor_inicial, char cor, int bandeira[altura][largura]) {
-    char cores[] = {'G', 'Y', 'R'};
-    int cor_gradiente = 0;
+    char cores[] = {'G', 'Y', 'R'};  // nome arbitrário das cores tricolor
+    int cor_gradiente = 0;  
     int gradiente = valor_inicial + 1;
     int soma_aposta = 0;
     int valor_aposta = 0;
@@ -15,18 +19,20 @@ void calcular_aposta(int largura, int altura, int valor_inicial, char cor, int b
     }
     
     for (int i = 0; i < largura; i++) {
-        for (int j = 0; j < altura; j++) {
-            bandeira[j][i] = gradiente;
-            soma_aposta += gradiente;
+        if (gradiente == cor_gradiente) {
+            for (int j = 0; j < altura; j++) {
+                bandeira[j][i] = gradiente;
+                valor_aposta += gradiente;
+            }
+        }
+        else {
+            for (int j = 0; j < altura; j++) {
+                bandeira[j][i] = gradiente;
+                soma_aposta += gradiente;
+            }
         }
         if (i % (largura / 3) == (largura / 3) - 1) {
             gradiente++;
-        }
-        if (gradiente == cor_gradiente) {
-                valor_aposta += soma_aposta - dif_aposta;
-            }
-        else {
-            dif_aposta += soma_aposta;
         }
     }
     
@@ -37,14 +43,14 @@ void calcular_aposta(int largura, int altura, int valor_inicial, char cor, int b
         printf("\n");
     }
     
-    printf("Valor da aposta: %d\n", valor_aposta);
+    printf("%d", valor_aposta);
 }
 
 int main() {
     int largura, valor_inicial;
     char cor;
     
-    printf("Informe a largura, o valor inicial e a cor (G, Y ou R): ");
+    printf("");
     scanf("%d %d %c", &largura, &valor_inicial, &cor);
     
     if (largura % 3 != 0 || valor_inicial < 0 || (cor != 'G' && cor != 'Y' && cor != 'R')) {
