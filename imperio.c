@@ -7,7 +7,7 @@
 //S - caracters permitidos na cifra
 #include <stdio.h>
 #include <string.h>
-int decifrar_cifra(char C[], const char KP[], int K[]){
+int *decifrar_cifra(char C[], const char KP[], int K[]){
     const char S[]= {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
                      'A', 'B', 'C', 'D', 'E', 'F','G', 'H', 'I', 'J',
                      'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
@@ -32,32 +32,84 @@ int decifrar_cifra(char C[], const char KP[], int K[]){
             }
         }
     }
+    int controlador = 0; //usarei essa variável para evitar stackoverflow e realizar um controle do array
+    int cifra = 0;
+    int correcao;
     for(int i = 0; i < tamanhos[0]; i++){
         for(int j = 0; j < tamanhos[0]; j++){
             if(i+j >= tamanhos[0]){
-                K[i] = posicao[j-i]-KP_posicoes[j];
-                printf("FOi if\n");
+                K[j] = posicao[controlador]-KP_posicoes[j];
+                controlador++;
             }
             else{
-                K[i] = posicao[i+j]-KP_posicoes[j];
+                if(posicao[i+j] < KP_posicoes[j]){
+                    correcao = KP_posicoes[j]+posicao[i+j]+1;
+                    K[j] = correcao-KP_posicoes[j];
+                }
+                else{
+                    K[j] = posicao[i+j]-KP_posicoes[j];
+                }
             }
-            printf("CHAVE: %d - %d\n", i, K[i]);
         }
-        printf("\n");
-    }    
+        controlador = 0;
+        for(int h = 0; h < tamanhos[0]; h++){
+            printf("%d", K[h]);
+            if(K[h] == K[h+4]){
+                cifra++;
+            }
+        }
+        if(cifra >= 4){
+            return K;
+        }
+        else{
+            cifra = 0;
+        }
+    }
+    return 0;    
 }
 
 
-int descriptografia_da_mensagem(){}
+int *descriptografia_da_mensagem(char C[], int K[]){
+    const char S[]= {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                     'A', 'B', 'C', 'D', 'E', 'F','G', 'H', 'I', 'J',
+                     'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+                     'U', 'V', 'W', 'X', 'Y', 'Z', '.', ',', '?', ' '};
+    for(int i = 0; i < strlen(C); i++){
+        for(int j = 0; j < strlen(S); j++){
+            if(C[i] == S[j]){
+                if(j-K[i] < 0){
+                    printf("%d-%d\n", j, K[i]);
+                    C[i] = S[39-(j-K[i]+1)];
+                }
+                else{
+                    C[i] = S[j- K[i]];
+                }
+                break; 
+            }
+        }
+    }
+    return C;
+}
 
 
 int main(){
     const char KP[100] = "QUE A FORCA ESTEJA COM VOCE";
     char C[100];
-    int K[25];
+    int K[50];
     fgets(C, 99, stdin);
-
-    decifrar_cifra(C, KP, K);
-
+    int *cifra = decifrar_cifra(C, KP, K);
+    if (cifra != NULL) {
+        for (int i = 0; i < 4; i++) {
+            printf("%d", cifra[i]);
+        }
+        printf("\n");
+    }  
+    else {
+        printf("Cifra não encontrada.\n");
+    }
+    char *mensagem = descriptografia_da_mensagem(C, cifra);
+    for(int i = 0; i < strlen(C)-1; i++){
+        printf("%c", mensagem[i]);
+    }
     return 0;
 }
