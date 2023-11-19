@@ -1,45 +1,48 @@
 #include <stdio.h>
-
-void matriz_quadratica(int tamanho){
-    int matriz[tamanho][tamanho];
-    int centro = (tamanho)/2+0.5;
-    for(int i = 0; i < tamanho; i++){
-        for(int j = 0; j < tamanho; j++){
+#include <stdlib.h>
+//diagonalização de matrizes quadráticas
+//Ou seja, irá tornar aparente as diagonais da matriz, a principal e inversa
+int** matriz_aloc(int n){
+    int **matriz;
+    matriz = (int **)malloc(sizeof(int *) * n);
+    for(int i = 0; i < n; i++){
+        matriz[i] = (int *)malloc(sizeof(int) * n);
+    }
+    for(int i = 0; i<n; i++){
+        for(int j = 0; j<n; j++){
+            matriz[i][j] = 3;
+        }
+    }
+    return matriz;
+}
+int** matriz_diagonals(int** matriz, int n){
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++){
             if(i == j){
                 matriz[i][j] = 1;
             }
-            else if(j == tamanho-i-1){
+            else if(i == (n-1)-j){
                 matriz[i][j] = 2;
-            }
-            else{
-                matriz[i][j] = 3;
             }
         }
     }
-    if((tamanho)/2 % 2 == 0){
-        matriz[centro][centro] = 2;
-    }
-    for(int i = 0; i < tamanho; i++){
-        for(int j = 0; j < tamanho; j++){
+    return matriz;
+}
+void print_matriz(int **matriz, int n){
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++){
             printf("%d", matriz[i][j]);
         }
         printf("\n");
     }
-
 }
 
-int main(){
-    while (1)
-    {
-        int tamanho;
-        printf("");
-        scanf("%d", &tamanho);
-        if(tamanho == 0){
-            break;
-        }
-        else {
-            matriz_quadratica(tamanho);
-        }
+int main(void){
+    int n;
+    printf("Type 0 to stop\n");
+    while(scanf("%d", &n) != 0){
+        int **matriz = matriz_diagonals(matriz_aloc(n), n);
+        print_matriz(matriz, n);
     }
 
     return 0;
