@@ -1,10 +1,7 @@
 //Pirmâmide quadrática
 #include <stdio.h>
 
-int main() {
-    int largura;
-    printf("");
-    scanf("%d", &largura);
+void square_matriz(int largura){
     int piramide[largura][largura];
     int valor_armazenamento = 1;
     int camadas = 0;
@@ -27,4 +24,14 @@ int main() {
         }
     printf("\n");
     }
+}
+    
+int main() {
+    int largura;
+    printf("Digite a largura(0 para encerrar o loop): ");
+    while(scanf("%d", &largura) == 1 && largura != 0){
+        square_matriz(largura);
+        printf("Digite a largura(0 para encerrar o loop): ");
+    }
+    return 0;
 }
