@@ -42,5 +42,6 @@ int main(void){
     char *reversed_string = string_reverse(risada_vogais, vogal_contador);
     char string_cmp = cmp_string(reversed_string, risada_vogais, vogal_contador);
     printf("O reverso das vogais da risada é igual? %c", string_cmp);
+    free(reversed_string);
     return 0;
 }
