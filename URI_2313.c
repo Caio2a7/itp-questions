@@ -8,6 +8,8 @@
 //printf("%d %d %d", lados[tam-1].a, lados[tam-1].b, lados[tam-1].c);
 typedef struct {
     int a, b, c;
+    char *tipo;
+    char *retangulo;
 } Triangulo;
 
 int is_triangle(Triangulo *lados, int tam){
@@ -41,7 +43,7 @@ int is_isosceles(Triangulo *lados, int tam){
         return 0;
     }
 }
-char *is_escaleno(Triangulo *lados, int tam){
+int is_escaleno(Triangulo *lados, int tam){
     if(lados[tam-1].a != lados[tam-1].b && lados[tam-1].b != lados[tam-1].c &&
     lados[tam-1].a != lados[tam-1].c){
         return 1;
@@ -80,6 +82,16 @@ int main(void){
         printf("--Digite abaixo os respectivos lados a b c do triângulo | Se digitar 0 0 0 o programa encerra--\n");
         scanf("%d %d %d", &lados[tam - 1].a, &lados[tam - 1].b, &lados[tam - 1].c);
         getchar();
+        if(is_triangle(lados, tam) == 1){
+            printf("TRI");
+            if(is_equilatero(lados, tam) == 1){ printf("EQUI"); }
+            else if(is_isosceles(lados, tam) == 1){ printf("ISOS");  }
+            else if(is_escaleno(lados, tam) == 1){ printf("ESCALENO");  }
+            else if(is_retangulo(lados, tam) == 1){ printf("RETA");  }
+        }
+        else{
+            printf("INVALIDO");
+        }
     } while(lados[tam - 1].a != 0 || lados[tam - 1].b != 0 || lados[tam - 1].c != 0);
 
     free(lados); 
