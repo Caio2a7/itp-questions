@@ -30,6 +30,21 @@ int **fil_diagonals(int n, int **matriz){
     }
     return matriz;
 }
+int **fill_centers(int n, int **matriz){
+    int init_border = n/3; //isso aqui é o definição que a questão fornece para onde a ponta inicial da bordar ao redor do centro será  
+    // será configurada, 1/3 da largura inicial
+    int finish_border = n-1-(n/3); //com essa padrão eu subtraio a largura pela
+    //ponta acima para pegar a ponta inversa e -1 porque o array começa com 0
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++){
+            if(i >= init_border && i <= finish_border && j >= init_border && j <= finish_border){
+                matriz[i][j] = 1;
+            }
+        }
+    }
+    matriz[n/2][n/2] = 4; //Ponto central
+    return matriz;
+}
 
 int main(void){
     int n;
@@ -38,8 +53,14 @@ int main(void){
         printf("A largura deve ser ímpar para aparecer o centro");
     }
     else{
-        int **matriz = fill_matrix(n);
-        fil_diagonals(n, matriz);
+        int **diagonals_matriz = fil_diagonals(n, fill_matrix(n));
+        int **final_matriz = fill_centers(n, diagonals_matriz);
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                printf("%d", final_matriz[i][j]);
+            }
+            printf("\n");
+        }
     }
 
     return 0;
