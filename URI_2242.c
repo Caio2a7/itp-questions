@@ -12,30 +12,35 @@ char *string_reverse(char risada[], int vogal_contador) {
         contador++;
     }
     reversed_risada[contador] = '\0'; 
-
-    printf("\n%s", reversed_risada);
     return reversed_risada; 
 }
-
+char cmp_string(char reversed_risada[], char risada[], int vogal_contador){
+    for(int i = 0; i < vogal_contador; i++){
+        if(risada[i] != reversed_risada[i]){
+            return 'N';
+        }
+    }
+    return 'S';
+}
 
 int main(void){
-    char risada[MAX_STR_LENGTH];
+    char risada_vogais[MAX_STR_LENGTH];
     char c;
     int string_contador = 0;
     int vogal_contador = 0;
     while((c = getchar()) != '\n' && c != EOF && string_contador < MAX_STR_LENGTH-1){
         for(int i = 0; i < 5; i++){
             if(c == vogais[i]){
-                risada[vogal_contador] = c;
+                risada_vogais[vogal_contador] = c;
                 vogal_contador++;
             }
         }
         string_contador++;
     }
     vogal_contador--; //ultimo tamhanho indica vazio na string
-    risada[string_contador] = '\0';
-    printf("\n%s", risada);
-    string_reverse(risada, vogal_contador);
-
+    risada_vogais[string_contador] = '\0';
+    char *reversed_string = string_reverse(risada_vogais, vogal_contador);
+    char string_cmp = cmp_string(reversed_string, risada_vogais, vogal_contador);
+    printf("O reverso das vogais da risada é igual? %c", string_cmp);
     return 0;
 }
