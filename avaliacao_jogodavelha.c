@@ -3,8 +3,8 @@ void avaliacao_jogadas(char tabuleiro[][3], int jogadas){
     int pos_x, pos_y;
     char jogada;
     char testes_tabuleiro[][3] = {{'*', '*', '*'},
-                               {'*', '*', '*'},
-                               {'*', '*', '*'}};
+                                 {'*', '*', '*'},
+                                 {'*', '*', '*'}};
     int var_jogada_regular = 0;
     for (int i = 0; i < jogadas; i++){
         printf("");
