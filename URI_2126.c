@@ -6,10 +6,13 @@
 
 void subsequence_finder(const char *subsequence, const char *sequence) {
     const char *substring = sequence;
+    int contador = 0;
     while ((substring = strstr(substring, subsequence)) != NULL) {
         printf("\nPos: %ld", substring - sequence);
         substring++;
+        contador++;
     }
+    printf("\nQtd: %d vezes", contador);
 }
 
 int main(void) {

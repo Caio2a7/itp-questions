@@ -25,7 +25,6 @@ int main(void) {
         emails = (char **)realloc(emails, sizeof(char *) * (index + 1));
         emails[index] = (char *)malloc(sizeof(char) * 100);
 
-
         scanf(" %s", emails[index]);
         if(strcmp(emails[index], "FIM") == 0){
             fim = 0;
